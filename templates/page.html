@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoxPop - main</title>
+</head>
+
+<body>
+<header>
+    <h1>VoxPop - Ваш голос в цифровом мире</h1>
+</header>
+
+<main>
+    <section id="comment-section">
+        <h2>Leave your comment here</h2>
+        <!-- Форма для оставления комментария -->
+        <form action="/" method="post">
+            <div>
+                <label for="comment-text">Comment field:</label>
+                <textarea id="comment-text" name="comment_text" required></textarea>
+
+            </div>
+            <div>
+                <label for="comment-category">Comment category:</label>
+                <select id="comment-category" name="comment_category" required>
+                    <option value="positive">Positive</option>
+                    <option value="negative">Negative</option>
+                </select>
+            </div>
+
+            <div>
+                <button type="submit">Send comment</button>
+            </div>
+        </form>
+    </section>
+
+    <section id="public-feed">
+        <h2>Comments</h2>
+        <!-- Список комментариев -->
+        <ul id="comment-list">
+            {% for comment in comments %}
+                <li>
+                    <p>{{ comment.text }}</p>
+                    <span class="category">{{ comment.category }}</span>
+                    <span class="timestamp">{{ comment.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <!-- Пагинация -->
+        <div id="pagination">
+            {% if page > 1 %}
+                <a href="?page={{ page - 1 }}">Prev page</a>
+            {% endif %}
+
+            page {{ page }}
+
+            {% if comments|length == 4 %}
+                <a href="?page={{ page + 1 }}">Next page</a>
+            {% endif %}
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; VoxPop. Shaimardan Bekarys</p>
+</footer>
+</body>
+
+</html>
